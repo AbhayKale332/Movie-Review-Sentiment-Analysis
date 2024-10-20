@@ -121,8 +121,10 @@
                 <input type="text" name="review" placeholder="Enter a movie review">
                 <input type="submit" value="Analyze Sentiment">
             </form>
+            <hr>
 
             <!-- Form for file upload -->
+            <p>Upload .txt File with Any Amount of Reviews Separated by a New Line:</p>
             <form action="/upload" method="POST" enctype="multipart/form-data">
                 <input type="file" name="file" accept=".txt">
                 <input type="submit" value="Upload and Analyze">
@@ -162,9 +164,6 @@
             <p>This sentiment analysis tool was developed by:</p>
             <div class="credits">
                 <strong>Abhay Kale</strong>
-            </div>
-            <div class="credits">
-                <strong>Siddique Saad</strong>
             </div>
         </div>
     </div>
