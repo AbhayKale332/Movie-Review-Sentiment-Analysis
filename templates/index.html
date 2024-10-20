@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Review Sentiment Analysis</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            width: 100%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+
+        .container {
+            display: flex;
+            margin-top: 20px;
+            width: 80%;
+            max-width: 1200px;
+        }
+
+        .main-content {
+            flex: 3;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-right: 20px;
+        }
+
+        .sidebar {
+            flex: 1;
+            background-color: #f8f8f8;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        input[type="text"], input[type="file"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        img {
+            margin-top: 20px;
+            width: 100%;
+            height: auto;
+        }
+
+        .credits {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        footer {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            width: 100%;
+            position: relative;
+            bottom: 0;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Movie Review Sentiment Analysis</h1>
+    </header>
+
+    <div class="container">
+
+        <!-- Main content for user inputs -->
+        <div class="main-content">
+            <!-- Form for single review -->
+            <form action="/predict" method="POST">
+                <input type="text" name="review" placeholder="Enter a movie review">
+                <input type="submit" value="Analyze Sentiment">
+            </form>
+
+            <!-- Form for file upload -->
+            <form action="/upload" method="POST" enctype="multipart/form-data">
+                <input type="file" name="file" accept=".txt">
+                <input type="submit" value="Upload and Analyze">
+            </form>
+
+            <!-- Display results for single review -->
+            {% if prediction %}
+                <div class="result">
+                    <strong>Review:</strong> {{ user_input }}
+                    <br>
+                    <strong>Predicted Sentiment:</strong> {{ prediction }}
+                </div>
+            {% endif %}
+
+            <!-- Display results for file upload -->
+            {% if pos_count is not none and neg_count is not none %}
+                <div class="result">
+                    <strong>Positive Reviews:</strong> {{ pos_count }}
+                    <br>
+                    <strong>Negative Reviews:</strong> {{ neg_count }}
+                    <br>
+                    <img src="/chart?pos_count={{ pos_count }}&neg_count={{ neg_count }}" alt="Sentiment Chart">
+                </div>
+            {% endif %}
+
+            <!-- Display file errors -->
+            {% if file_error %}
+                <div class="result">
+                    <strong>Error:</strong> {{ file_error }}
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Sidebar for credits -->
+        <div class="sidebar">
+            <h3>Credits</h3>
+            <p>This sentiment analysis tool was developed by:</p>
+            <div class="credits">
+                <strong>Abhay Kale</strong>
+            </div>
+            <div class="credits">
+                <strong>Siddique Saad</strong>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
